@@ -27,6 +27,7 @@ dependencies {
 	implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("jakarta.validation:jakarta.validation-api:3.1.0")
+	implementation("com.h2database:h2:2.3.232")
 	runtimeOnly("org.postgresql:postgresql")
 	testImplementation("io.projectreactor:reactor-test")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")

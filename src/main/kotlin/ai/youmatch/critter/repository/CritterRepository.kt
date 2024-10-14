@@ -8,4 +8,5 @@ import java.util.*
 @Repository
 interface CritterRepository: JpaRepository<Critter, UUID> {
     fun findByName(name: String): Optional<Critter>
+    fun deleteByName(name: String)
 }

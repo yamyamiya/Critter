@@ -1,5 +1,6 @@
 package ai.youmatch.critter.entity
 
+import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.Id
 import jakarta.validation.constraints.Max
@@ -12,6 +13,7 @@ import kotlin.random.Random
 data class Critter (
         @Id
         val id: UUID =UUID.randomUUID(),
+        @field:Column(unique = true)
         @field:NotBlank
         val name: String,
         val type: Type= Type.entries.toTypedArray().random(),
