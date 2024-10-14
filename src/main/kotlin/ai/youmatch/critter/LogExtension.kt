@@ -1,4 +1,4 @@
-package dev.turcan.andrei.telegram.chat.summarizer
+package ai.youmatch.critter
 
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory

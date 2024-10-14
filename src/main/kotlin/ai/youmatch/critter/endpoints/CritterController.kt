@@ -2,12 +2,11 @@ package ai.youmatch.critter.endpoints
 
 import ai.youmatch.critter.entity.Critter
 import ai.youmatch.critter.entity.Size
+import ai.youmatch.critter.log
 import ai.youmatch.critter.service.CritterService
-import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import java.util.*
-import kotlin.collections.List
 
 @RestController
 @RequestMapping("/critter")
@@ -21,7 +20,9 @@ class CritterController(
             @RequestParam size: Size,
             @RequestParam age: Int
     ): ResponseEntity<UUID> {
-        return ResponseEntity.ok(critterService.add(name, size, age))
+        val response = ResponseEntity.ok(critterService.add(name, size, age))
+        response.log.info("Critter with name $name is created")
+        return response
     }
 
     @GetMapping("/{id}")
@@ -46,7 +47,9 @@ class CritterController(
             @RequestParam size: Size,
             @RequestParam age: Int
     ): ResponseEntity<Critter> {
-        return ResponseEntity.ok(critterService.updateById(id, name, size, age))
+        val response = ResponseEntity.ok(critterService.updateById(id, name, size, age))
+        response.log.info("Critter id: $id is updated")
+        return response
     }
 
     @PutMapping("/{name}")
@@ -55,16 +58,22 @@ class CritterController(
             @RequestParam size: Size,
             @RequestParam age: Int
     ): ResponseEntity<Critter> {
-        return ResponseEntity.ok(critterService.updateByName(name, size, age))
+        val response = ResponseEntity.ok(critterService.updateByName(name, size, age))
+        response.log.info("Critter name: $name is updated")
+        return response
     }
 
     @DeleteMapping("/{id}")
     fun deleteById(@PathVariable id: UUID): ResponseEntity<Result<String>> {
-        return ResponseEntity.ok(critterService.deleteById(id))
+        val response = ResponseEntity.ok(critterService.deleteById(id))
+        response.log.info("Critter id: $id is deleted")
+        return response
     }
 
     @DeleteMapping("/{name}")
     fun deleteByName(@PathVariable name: String): ResponseEntity<Result<String>> {
-        return ResponseEntity.ok(critterService.deleteByName(name))
+        val response = ResponseEntity.ok(critterService.deleteByName(name))
+        response.log.info("Critter name: $name is deleted")
+        return response
     }
 }
