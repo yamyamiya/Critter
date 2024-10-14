@@ -1,5 +1,6 @@
 package ai.youmatch.critter.endpoints
 
+import ai.youmatch.critter.dto.CritterDTO
 import ai.youmatch.critter.entity.Critter
 import ai.youmatch.critter.entity.Size
 import ai.youmatch.critter.log
@@ -16,21 +17,19 @@ class CritterController(
 
     @PostMapping
     fun add(
-            @RequestParam name: String,
-            @RequestParam size: Size,
-            @RequestParam age: Int
+            @RequestBody critterDTO: CritterDTO
     ): ResponseEntity<UUID> {
-        val response = ResponseEntity.ok(critterService.add(name, size, age))
-        response.log.info("Critter with name $name is created")
+        val response = ResponseEntity.ok(critterService.add(critterDTO.name, critterDTO.size, critterDTO.age))
+        response.log.info("Critter with name ${critterDTO.name} is created")
         return response
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/id/{id}")
     fun getById(@PathVariable id: UUID): ResponseEntity<Critter> {
         return ResponseEntity.ok(critterService.getById(id))
     }
 
-    @GetMapping("/{name}")
+    @GetMapping("/name/{name}")
     fun getByName(@PathVariable name: String): ResponseEntity<Critter> {
         return ResponseEntity.ok(critterService.getByName(name))
     }
@@ -40,37 +39,33 @@ class CritterController(
         return ResponseEntity.ok(critterService.getAll())
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/id/{id}")
     fun updateById(
             @PathVariable id: UUID,
-            @RequestParam name: String,
-            @RequestParam size: Size,
-            @RequestParam age: Int
+            @RequestBody critterDTO: CritterDTO
     ): ResponseEntity<Critter> {
-        val response = ResponseEntity.ok(critterService.updateById(id, name, size, age))
+        val response = ResponseEntity.ok(critterService.updateById(id, critterDTO.name, critterDTO.size, critterDTO.age))
         response.log.info("Critter id: $id is updated")
         return response
     }
 
-    @PutMapping("/{name}")
+    @PutMapping("/name")
     fun updateByName(
-            @PathVariable name: String,
-            @RequestParam size: Size,
-            @RequestParam age: Int
+            @RequestBody critterDTO: CritterDTO
     ): ResponseEntity<Critter> {
-        val response = ResponseEntity.ok(critterService.updateByName(name, size, age))
-        response.log.info("Critter name: $name is updated")
+        val response = ResponseEntity.ok(critterService.updateByName(critterDTO.name, critterDTO.size, critterDTO.age))
+        response.log.info("Critter name: ${critterDTO.name} is updated")
         return response
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/id/{id}")
     fun deleteById(@PathVariable id: UUID): ResponseEntity<Result<String>> {
         val response = ResponseEntity.ok(critterService.deleteById(id))
         response.log.info("Critter id: $id is deleted")
         return response
     }
 
-    @DeleteMapping("/{name}")
+    @DeleteMapping("/name/{name}")
     fun deleteByName(@PathVariable name: String): ResponseEntity<Result<String>> {
         val response = ResponseEntity.ok(critterService.deleteByName(name))
         response.log.info("Critter name: $name is deleted")
