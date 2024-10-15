@@ -28,7 +28,6 @@ data class Critter (
 ){
     companion object {
         fun calculateMood(powerLevel: Int, age: Int): Mood {
-            // If age is 0, avoid division by zero by treating mood as just random
             val ageFactor = if (age > 0) (powerLevel.toDouble() / age) else 0.0
             val moodValue = Random.nextDouble(0.0, 0.5) + ageFactor
 
